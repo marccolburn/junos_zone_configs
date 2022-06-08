@@ -1,0 +1,15 @@
+{% for zone in zones %}
+{% for interface in zone.interfaces %}
+delete security zones security-zone {{ zone.name }} interfaces {{ interface }}
+{% endfor %}
+{% if zone.services is defined %}
+{% for service in zone.services %}
+delete security zones security-zone {{ zone.name }} host-inbound-traffic system-services {{ service }}
+{% endfor %}
+{% endif %}
+{% if zone.protocols is defined %}
+{% for protocol in zone.protocols %}
+delete security zones security-zone {{ zone.name }} host-inbound-traffic protocols {{ protocol }}
+{% endfor %}
+{% endif %}
+{% endfor %}

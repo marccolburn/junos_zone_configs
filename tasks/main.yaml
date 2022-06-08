@@ -1,0 +1,12 @@
+---
+- name: Configure Junos Security Zones
+  junos_config:
+    lines: "{{ lookup('template', 'junos_zone_config.j2').split('\n') }}"
+    comment: Create security zones
+  when: zone_remove == False
+
+- name: Remove Junos Security Zones
+  junos_config:
+    lines: "{{ lookup('template', 'junos_zone_remove.j2').split('\n') }}"
+    comment: Remove security zones
+  when: zone_remove == True
